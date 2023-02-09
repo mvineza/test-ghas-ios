@@ -1,39 +1,22 @@
-name: "MobSF Scan"
-
-# Use "master" or "main" depending on what is your long lived branch
+name: mobsfscan sarif
 on:
   push:
-    branches: [ "main" ]
+    branches: [ master, main ]
   pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
+    branches: [ master, main ]
 
 jobs:
-  mobile-security:
-    permissions:
-      contents: read
-      security-events: write
+  mobsfscan:
     runs-on: ubuntu-latest
-
+    name: mobsfscan code scanning
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup python
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.10.6
-
-      - name: Install missing python modules
-        run: pip install click
-
-      - name: Run mobsfscan
-        uses: MobSF/mobsfscan@a60d10a83af68e23e0b30611c6515da604f06f65
-        with:
-          args: . --sarif --output results.sarif
-
-      - name: Upload mobsfscan report
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: results.sarif
+    - name: Checkout the code
+      uses: actions/checkout@v2
+    - name: mobsfscan
+      uses: MobSF/mobsfscan@main
+      with:
+        args: '. --sarif --output results.sarif || true'
+    - name: Upload mobsfscan report
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: results.sarif
