@@ -13,3 +13,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: mobsfscan
       uses: MobSF/mobsfscan@main
+      with:
+        args: '.'
