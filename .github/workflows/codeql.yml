@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ ]
+        language: [ 'python' ]
         # Examples:
         #   language: [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         #   language: [ 'python' ]
